@@ -21,7 +21,7 @@ class APIConfig:
     def get_openai_config() -> dict[str, Any]:
         """Get OpenAI configuration."""
         return {
-            "model_name_or_path": os.getenv("MOS_CHAT_MODEL", "gpt-4o-mini"),
+            "model_name_or_path": os.getenv("MOS_OPENAI_MODEL", "gpt-4o-mini"),
             "temperature": float(os.getenv("MOS_CHAT_TEMPERATURE", "0.8")),
             "max_tokens": int(os.getenv("MOS_MAX_TOKENS", "1024")),
             "top_p": float(os.getenv("MOS_TOP_P", "0.9")),
@@ -186,25 +186,25 @@ class APIConfig:
         return {
             "uri": os.getenv("NEO4J_URI", "bolt://localhost:7687"),
             "user": os.getenv("NEO4J_USER", "neo4j"),
-            "db_name": os.getenv("NEO4J_DB_NAME", "shared-tree-textual-memory"),
+            "db_name": os.getenv("NEO4J_DB_NAME", "neo4j"),
             "password": os.getenv("NEO4J_PASSWORD", "12345678"),
             "user_name": f"memos{user_id.replace('-', '')}",
-            "auto_create": True,
+            "auto_create": False,
             "use_multi_db": False,
-            "embedding_dimension": int(os.getenv("EMBEDDING_DIMENSION", 3072)),
+            "embedding_dimension": int(os.getenv("EMBEDDING_DIMENSION", 1024)),
             "vec_config": {
                 # Pass nested config to initialize external vector DB
                 # If you use qdrant, please use Server instead of local mode.
                 "backend": "qdrant",
                 "config": {
                     "collection_name": "neo4j_vec_db",
-                    "vector_dimension": int(os.getenv("EMBEDDING_DIMENSION", 3072)),
+                    "vector_dimension": int(os.getenv("EMBEDDING_DIMENSION", 1024)),
                     "distance_metric": "cosine",
-                    "host": "localhost",
-                    "port": 6333,
+                    "host": os.getenv("QDRANT_HOST", "localhost"),
+                    "port": int(os.getenv("QDRANT_PORT", "6333")),
                 },
             },
-        }
+        } 
 
     @staticmethod
     def get_neo4j_config(user_id: str | None = None) -> dict[str, Any]:
