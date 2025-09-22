@@ -204,7 +204,7 @@ class APIConfig:
                     "port": int(os.getenv("QDRANT_PORT", "6333")),
                 },
             },
-        } 
+        }
 
     @staticmethod
     def get_neo4j_config(user_id: str | None = None) -> dict[str, Any]:
