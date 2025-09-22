@@ -57,7 +57,7 @@ MOCK_CONFIG = {
 @pytest.fixture
 def mock_mos():
     """Mock MOS instance for testing."""
-    with patch("memos.api.start_api.get_mos_instance") as mock_get_mos:
+    with patch("memos.api.start_config.get_mos_instance") as mock_get_mos:
         # Create a mock MOS instance
         mock_instance = Mock()
 
