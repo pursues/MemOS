@@ -84,7 +84,7 @@ def mock_mos():
 
 def test_configure(mock_mos):
     """Test configuration endpoint."""
-    with patch("memos.api.start_api.MOS_INSTANCE", None):
+    with patch("memos.api.start_config.MOS_INSTANCE", None):
         # Use a valid configuration
         valid_config = {
             "user_id": "test_user",

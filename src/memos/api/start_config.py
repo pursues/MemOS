@@ -15,7 +15,7 @@ from memos.mem_user.user_manager import UserManager, UserRole
 logger = get_logger(__name__)
 
 # Global MOS instance with lazy initialization
-_MOS_INSTANCE = None
+MOS_INSTANCE = None
 
 # Default configuration from environment variables
 DEFAULT_CONFIG = {
@@ -87,9 +87,9 @@ def get_mos_instance() -> MOS:
     Returns:
         MOS: The MOS instance
     """
-    global _MOS_INSTANCE
+    global MOS_INSTANCE
 
-    if _MOS_INSTANCE is None:
+    if MOS_INSTANCE is None:
         # Create configuration
         temp_config = MOSConfig(**DEFAULT_CONFIG)
 
@@ -108,10 +108,10 @@ def get_mos_instance() -> MOS:
         create_user_if_not_exists(temp_config.user_id, temp_mos.user_manager)
 
         # Now create the actual MOS instance
-        _MOS_INSTANCE = MOS(config=temp_config)
+        MOS_INSTANCE = MOS(config=temp_config)
         logger.info(f"MOS instance created successfully for user: {temp_config.user_id}")
 
-    return _MOS_INSTANCE
+    return MOS_INSTANCE
 
 
 def set_mos_instance(config: MOSConfig) -> MOS:
@@ -124,21 +124,21 @@ def set_mos_instance(config: MOSConfig) -> MOS:
     Returns:
         MOS: The new MOS instance
     """
-    global _MOS_INSTANCE
+    global MOS_INSTANCE
 
     # Create a temporary user manager to check/create default user
     temp_user_manager = UserManager()
     create_user_if_not_exists(config.user_id, temp_user_manager)
 
     # Create the MOS instance
-    _MOS_INSTANCE = MOS(config=config)
+    MOS_INSTANCE = MOS(config=config)
     logger.info(f"MOS instance updated with new configuration for user: {config.user_id}")
 
-    return _MOS_INSTANCE
+    return MOS_INSTANCE
 
 
 def reset_mos_instance() -> None:
     """Reset the MOS instance (useful for testing)."""
-    global _MOS_INSTANCE
-    _MOS_INSTANCE = None
+    global MOS_INSTANCE
+    MOS_INSTANCE = None
     logger.info("MOS instance reset")
