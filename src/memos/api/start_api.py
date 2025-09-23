@@ -425,8 +425,6 @@ async def global_exception_handler(request: Request, exc: Exception):
 if __name__ == "__main__":
     import argparse
 
-    import uvicorn
-
     parser = argparse.ArgumentParser()
     parser.add_argument("--port", type=int, default=8000, help="Port to run the server on")
     parser.add_argument("--host", type=str, default="0.0.0.0", help="Host to run the server on")
