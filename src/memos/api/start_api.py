@@ -422,6 +422,7 @@ async def global_exception_handler(request: Request, exc: Exception):
         content={"code": 500, "message": str(exc), "data": None},
     )
 
+
 if __name__ == "__main__":
     import argparse
 
