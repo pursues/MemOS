@@ -14,8 +14,6 @@ from memos.configs.mem_os import MOSConfig
 from memos.mem_os.main import MOS
 from memos.mem_user.user_manager import UserManager, UserRole
 
-from fastapi.responses import RedirectResponse
-from memos.api.exceptions import APIExceptionHandler
 
 
 # Configure logging
@@ -399,7 +397,6 @@ async def chat(chat_req: ChatRequest):
     if response is None:
         raise ValueError("No response generated")
     return ChatResponse(message="Chat response generated", data=response)
-
 
 @app.get("/", summary="Redirect to the OpenAPI documentation", include_in_schema=False)
 async def home():
