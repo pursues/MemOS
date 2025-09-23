@@ -140,7 +140,7 @@ def test_configure(mock_mos):
 
 def test_configure_error(mock_mos):
     """Test configuration endpoint with error."""
-    with patch("memos.api.start_api.MOS_INSTANCE", None):
+    with patch("memos.api.start_config.MOS_INSTANCE", None):
         response = client.post("/configure", json={})
         assert response.status_code == 422  # FastAPI validation error
 
