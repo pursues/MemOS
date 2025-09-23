@@ -15,7 +15,6 @@ from memos.mem_os.main import MOS
 from memos.mem_user.user_manager import UserManager, UserRole
 
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
@@ -398,11 +397,11 @@ async def chat(chat_req: ChatRequest):
         raise ValueError("No response generated")
     return ChatResponse(message="Chat response generated", data=response)
 
+
 @app.get("/", summary="Redirect to the OpenAPI documentation", include_in_schema=False)
 async def home():
     """Redirect to the OpenAPI documentation."""
     return RedirectResponse(url="/docs", status_code=307)
-
 
 
 @app.exception_handler(ValueError)
