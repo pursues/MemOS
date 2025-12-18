@@ -8,6 +8,10 @@ RUN rm -rf /app/
 
 WORKDIR /app
 
+
+# Set Aliyun mirror
+RUN sed -i 's/deb.debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list.d/debian.sources
+
 RUN apt-get update && \
     apt-get install -y --no-install-recommends git && \
     rm -rf /var/lib/apt/lists/*
