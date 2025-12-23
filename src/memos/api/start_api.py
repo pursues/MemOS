@@ -40,40 +40,6 @@ DEFAULT_CONFIG = {
             "api_base": os.getenv("OPENAI_API_BASE", "https://api.openai.com/v1"),
         },
     },
-    # Ensure mem_reader has required fields to satisfy Pydantic validation
-    # This prevents `MemReaderConfigFactory` missing-field errors when MOSConfig is instantiated
-    "mem_reader": {
-        "backend": "simple_struct",
-        "config": {
-            "llm": {
-                "backend": "openai",
-                "config": {
-                    "model_name_or_path": os.getenv("MOS_CHAT_MODEL", "gpt-3.5-turbo"),
-                    "api_key": os.getenv("OPENAI_API_KEY", "apikey"),
-                    "temperature": float(os.getenv("MOS_CHAT_TEMPERATURE", "0.7")),
-                    "api_base": os.getenv("OPENAI_API_BASE", "https://api.openai.com/v1"),
-                },
-            },
-            "embedder": {
-                "backend": "universal_api",
-                "config": {
-                    "provider": "openai",
-                    "api_key": os.getenv("OPENAI_API_KEY", "apikey"),
-                    "model_name_or_path": os.getenv("MOS_EMBED_MODEL", "text-embedding-3-large"),
-                    "base_url": os.getenv("OPENAI_API_BASE", "https://api.openai.com/v1"),
-                },
-            },
-            "chunker": {
-                "backend": "sentence",
-                "config": {
-                    "tokenizer_or_token_counter": "gpt2",
-                    "chunk_size": int(os.getenv("MOS_CHUNK_SIZE", "512")),
-                    "chunk_overlap": int(os.getenv("MOS_CHUNK_OVERLAP", "128")),
-                    "min_sentences_per_chunk": 1,
-                },
-            },
-        },
-    },
 }
 
 # Initialize MOS instance with lazy initialization
@@ -204,7 +170,7 @@ class UserCreate(BaseRequest):
     user_name: str | None = Field(
         None, description="Name of the user", json_schema_extra={"example": "john_doe"}
     )
-    role: str = Field("USER", description="Role of the user", json_schema_extra={"example": "USER"})
+    role: str = Field("user", description="Role of the user", json_schema_extra={"example": "user"})
     user_id: str = Field(..., description="User ID", json_schema_extra={"example": "user123"})
 
 
